@@ -1,10 +1,15 @@
+<video src="https://github.com/user-attachments/assets/62c911e7-4eb1-4285-9e28-48d6acbe1837" height="300px" autoplay loop muted playsinline></video>
+
 # <img src="./assets/denki-kurage.png" height="32px"> Denki Kurage
 
 `Denki Kurage` (ja: 電気くらげ, electric jellyfish)
 
 A sort of an artificial jellyfish on CYD (Cheap Yellow Display, ESP32).
 
-<video src="https://github.com/user-attachments/assets/62c911e7-4eb1-4285-9e28-48d6acbe1837" height="300px" autoplay loop muted playsinline></video>
+- Retro, low-poly 3D jellyfish animation for the Cheap Yellow Display (CYD), an ESP32 development board with an integrated screen.
+- Touch the screen to change color modes or adjust the water current speed.
+- Customizable enclosure designed with OpenSCAD.
+- **Just watch the jellyfish swimming and chill.**
 
 ## BOM
 
