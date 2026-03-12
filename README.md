@@ -41,6 +41,7 @@ pio run -t upload
 ## Gallery
 
 <div>
+<img src="https://github.com/user-attachments/assets/675966a4-f1ad-4030-b379-b8d63ea308b7" height="300px">
 <img src="./assets/denki_kurage_front_3.jpg" height="300px">
 <img src="./assets/denki_kurage_side.jpg" height="300px">
 <img src="./assets/denki_kurage_back.jpg" height="300px">
