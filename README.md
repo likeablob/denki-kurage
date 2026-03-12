@@ -4,6 +4,8 @@
 
 A sort of an artificial jellyfish on CYD (Cheap Yellow Display, ESP32).
 
+<video src="https://github.com/user-attachments/assets/62c911e7-4eb1-4285-9e28-48d6acbe1837" height="300px" autoplay loop muted playsinline></video>
+
 ## BOM
 
 | Component      | Quantity | Notes                           |
@@ -17,6 +19,8 @@ For .stl and .scad files, see [`./enclosure`](./enclosure).
 <img src="./enclosure/images/dk_stand_bottom.jpg" height="150px">
 
 ## Controls (Touch)
+
+<video src="https://github.com/user-attachments/assets/3129b887-57ab-4135-a686-5584df11771e" height="300px" autoplay loop muted playsinline></video>
 
 | Area                                 | Action             |
 | :----------------------------------- | :----------------- |
@@ -40,7 +44,7 @@ pio run -t upload
 <img src="./assets/denki_kurage_front_3.jpg" height="300px">
 <img src="./assets/denki_kurage_side.jpg" height="300px">
 <img src="./assets/denki_kurage_back.jpg" height="300px">
-<video src="" height="300px" autoplay loop muted playsinline></video>
+<video src="https://github.com/user-attachments/assets/8bef5e71-7549-4883-ab79-739655af0c46" height="300px" autoplay loop muted playsinline></video>
 </div>
 
 ## Acknowledgements
