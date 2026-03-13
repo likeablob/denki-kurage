@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Denki Kurage Web Flasher</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Web flasher for Denki Kurage (Electric Jellyfish) animation on ESP32 Cheap Yellow Display (CYD)."
+    />
+    <meta name="color-scheme" content="dark light" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Denki Kurage Web Flasher" />
+    <meta
+      property="og:description"
+      content="Easily flash the latest Denki Kurage firmware on your CYD directly from your browser."
+    />
+    <meta property="og:image" content="cover.jpg" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Denki Kurage Web Flasher" />
+    <meta
+      name="twitter:description"
+      content="Easily flash the latest Denki Kurage firmware on your CYD directly from your browser."
+    />
+    <meta name="twitter:image" content="cover.jpg" />
+
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <style>
+      :root {
+        --deep-sea-bg: #0a192f;
+        --deep-sea-surface: #112240;
+        --text-main: #e0e6ed;
+        --text-muted: #8b9bb4;
+        --accent-kurage: #66587a;
+        --accent-glow: #9d8db3;
+        --accent-indigo: #3f51b5;
+        --success: #4caf50;
+        --warning: #ff9800;
+        --danger: #ff4a4a;
+      }
+
+      body {
+        font-family:
+          -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Ubuntu, sans-serif;
+        padding: 0;
+        margin: 0;
+        line-height: 1.6;
+        background-color: var(--deep-sea-bg);
+        color: var(--text-main);
+        background-image: radial-gradient(
+          circle at 50% 0%,
+          rgba(63, 81, 181, 0.2) 0%,
+          transparent 60%
+        );
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        overflow-x: hidden;
+        position: relative;
+      }
+
+      /* Bubble Effect */
+      .bubbles {
+        position: fixed;
+        bottom: -20px;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        pointer-events: none;
+      }
+
+      .bubble {
+        position: absolute;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.25);
+        border-radius: 50%;
+        animation: rise var(--duration) ease-in infinite;
+        opacity: 0;
+      }
+
+      @keyframes rise {
+        0% {
+          transform: translateY(0) scale(1);
+          opacity: 0;
+        }
+        10% {
+          opacity: 0.5;
+        }
+        90% {
+          opacity: 0.5;
+        }
+        100% {
+          transform: translateY(-110vh) scale(1.5);
+          opacity: 0;
+        }
+      }
+
+      .content {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 40px 24px;
+        text-align: center;
+        flex: 1;
+        z-index: 1;
+      }
+
+      .logo-container {
+        margin-bottom: 24px;
+      }
+
+      .logo {
+        width: 120px;
+        height: auto;
+      }
+
+      .demo-video {
+        width: auto;
+        max-width: 100%;
+        height: 320px;
+        border-radius: 12px;
+        margin: 40px auto 20px;
+        border: 2px solid var(--deep-sea-surface);
+        background-color: #000;
+        display: block;
+        object-fit: contain;
+      }
+
+      h1 {
+        margin-top: 0;
+        margin-bottom: 0.5em;
+        color: #ffffff;
+        font-weight: 300;
+        letter-spacing: 1px;
+      }
+
+      p.subtitle {
+        margin-bottom: 1em;
+        color: var(--text-muted);
+        font-size: 1.1em;
+      }
+
+      .variant-selection {
+        margin: 30px 0;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+
+      .variant-option {
+        background: var(--deep-sea-surface);
+        padding: 10px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        border: 1px solid rgba(102, 88, 122, 0.3);
+        transition: border-color 0.2s;
+        font-size: 0.9em;
+      }
+
+      .variant-option:hover {
+        border-color: var(--accent-glow);
+      }
+
+      .variant-option input {
+        margin-right: 8px;
+      }
+
+      a {
+        color: var(--accent-glow);
+        text-decoration: none;
+        transition:
+          color 0.2s ease,
+          text-shadow 0.2s ease;
+      }
+
+      a:hover {
+        color: #ffffff;
+        text-decoration: underline;
+        text-shadow: 0 0 8px rgba(157, 141, 179, 0.8);
+      }
+
+      .flasher-container {
+        margin: 40px auto;
+        max-width: 480px;
+      }
+
+      esp-web-install-button {
+        --esp-tools-button-color: var(--accent-kurage);
+        --esp-tools-button-text-color: #ffffff;
+        --esp-tools-button-border-radius: 6px;
+      }
+
+      .info-box {
+        font-size: 0.85em;
+        margin-top: 16px;
+        opacity: 0.9;
+        text-align: center;
+        padding: 12px;
+        border-radius: 6px;
+      }
+
+      .caution {
+        color: var(--danger);
+      }
+
+      .note {
+        color: var(--warning);
+      }
+
+      .footer {
+        margin-top: 60px;
+        padding-bottom: 40px;
+        font-size: 0.9em;
+        color: var(--text-muted);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bubbles" id="bubbles"></div>
+
+    <div class="content">
+      <div class="logo-container">
+        <img src="denki-kurage.png" alt="Denki Kurage Logo" class="logo" />
+      </div>
+
+      <h1>Denki Kurage</h1>
+      <p class="subtitle">
+        Easily flash the latest Denki Kurage firmware on your CYD directly from
+        your browser.
+      </p>
+
+      <div class="variant-selection">
+        <label class="variant-option">
+          <input
+            type="radio"
+            name="variant"
+            value="cyd2usb/manifest.json"
+            checked
+          />
+          CYD2USB (USB-C + Micro USB)
+        </label>
+        <label class="variant-option">
+          <input type="radio" name="variant" value="cyd/manifest.json" />
+          CYD (Micro USB only)
+        </label>
+      </div>
+
+      <div class="flasher-container">
+        <script
+          type="module"
+          src="https://unpkg.com/esp-web-tools@10.0.1/dist/web/install-button.js?module"
+        ></script>
+        <esp-web-install-button id="install-button"></esp-web-install-button>
+
+        <div class="info-box caution">
+          <strong>Caution:</strong> The enclosure is only compatible with the
+          <a
+            href="https://github.com/witnessmenow/ESP32-Cheap-Yellow-Display/blob/main/cyd.md"
+            target="_blank"
+            >CYD2USB</a
+          >
+          variant.
+        </div>
+
+        <div class="info-box note">
+          <strong>Note:</strong> Web flashing requires a Chromium-based browser.
+          Please close any applications using your device's COM port (e.g.,
+          Serial Monitor).
+        </div>
+      </div>
+
+      <video
+        src="https://github.com/user-attachments/assets/8bef5e71-7549-4883-ab79-739655af0c46"
+        poster="cover.jpg"
+        class="demo-video"
+        autoplay
+        loop
+        muted
+        playsinline
+        height="320"
+      ></video>
+
+      <div class="footer">
+        <a href="https://github.com/likeablob/denki-kurage"
+          >&larr; Return to GitHub Repository</a
+        >
+      </div>
+    </div>
+
+    <script>
+      // Handle variant selection
+      const installBtn = document.getElementById("install-button");
+      const radios = document.querySelectorAll('input[name="variant"]');
+
+      function updateManifest() {
+        const selected = document.querySelector(
+          'input[name="variant"]:checked',
+        );
+        installBtn.setAttribute("manifest", selected.value);
+      }
+
+      radios.forEach((radio) => {
+        radio.addEventListener("change", updateManifest);
+      });
+
+      // Initial set
+      updateManifest();
+
+      // Bubble effect
+      function createBubbles() {
+        const container = document.getElementById("bubbles");
+        const bubbleCount = 20;
+        for (let i = 0; i < bubbleCount; i++) {
+          const bubble = document.createElement("div");
+          bubble.className = "bubble";
+          const size = Math.random() * 12 + 4 + "px";
+          bubble.style.width = size;
+          bubble.style.height = size;
+          bubble.style.left = Math.random() * 100 + "%";
+          bubble.style.setProperty("--duration", Math.random() * 10 + 8 + "s");
+          bubble.style.animationDelay = Math.random() * 10 + "s";
+          container.appendChild(bubble);
+        }
+      }
+      createBubbles();
+    </script>
+  </body>
+</html>

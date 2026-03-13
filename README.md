@@ -6,20 +6,29 @@
 
 A sort of an artificial jellyfish on CYD (Cheap Yellow Display, ESP32).
 
-- Retro, low-poly 3D jellyfish animation for the Cheap Yellow Display (CYD), an ESP32 development board with an integrated screen.
+- Retro, low-poly 3D jellyfish animation for the CYD, an ESP32 development board with an integrated screen.
 - Touch the screen to change color modes or adjust the water current speed.
 - Customizable enclosure designed with OpenSCAD.
 - **Just watch the jellyfish swimming and chill.**
 
+_This project is currently only for the CYD2USB (CYD variants with a USB-C port)._
+
 ## BOM
 
-| Component      | Quantity | Notes                           |
-| :------------- | :------- | :------------------------------ |
-| ESP32-2432S028 | 1        | 2.8" TFT "Cheap Yellow Display" |
+| Component                        | Quantity | Notes                                                  |
+| :------------------------------- | :------- | :----------------------------------------------------- |
+| ESP32-2432S028 (CYD2USB variant) | 1        | 2.8" TFT "Cheap Yellow Display" with USB-C + Micro USB |
+| M2x3 Self-Tapping screw          | 4        |                                                        |
+
+## Getting Started
+
+1. Print the enclosure: Use the 3MF files in [`./enclosure`](./enclosure) to 3D print the stand.
+2. Flash the firmware: Use the [Web Flasher](https://likeablob.github.io/denki-kurage/) to flash the latest firmware directly from your browser.
+3. Assemble: Put the CYD into the enclosure and secure it with four M2x3 self-tapping screws.
 
 ## 3D Printed Parts
 
-For .stl and .scad files, see [`./enclosure`](./enclosure).
+For .3mf and .scad files, see [`./enclosure`](./enclosure).
 
 <img src="./enclosure/images/dk_stand_bottom.jpg" height="150px">
 
@@ -35,7 +44,7 @@ For .stl and .scad files, see [`./enclosure`](./enclosure).
 | Top-right corner (Solid / Wireframe) | **Toggle Mode**    |
 | Bottom-right corner                  | **Debug Info**     |
 
-## Build
+## Building from source
 
 Built and flashed using [PlatformIO](https://platformio.org/).
 

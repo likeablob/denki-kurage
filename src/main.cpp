@@ -48,7 +48,11 @@ void setup() {
 
     tft.init();
     tft.setRotation(0);
+#ifdef CYD_INVERT_DISPLAY
     tft.invertDisplay(true);
+#else
+    tft.invertDisplay(false);
+#endif
     tft.fillScreen(CL_BG);
 
     canvas.setColorDepth(8);

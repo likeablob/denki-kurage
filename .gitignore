@@ -22,3 +22,8 @@ nohup.out
 
 ## Project local
 .pio
+
+# Web Flasher Build Artifacts
+webflash/*.bin
+webflash/cyd/*.bin
+webflash/cyd2usb/*.bin
