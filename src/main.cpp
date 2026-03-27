@@ -64,9 +64,8 @@ void setup() {
     input.loadSettings(current_mode);
 
     // Initialize Backlight
-    ledcSetup(0, 5000, 8);
-    ledcAttachPin(TFT_BL_PIN, 0);
-    ledcWrite(0, input.getBrightness()); // Apply loaded brightness
+    ledcAttach(TFT_BL_PIN, 5000, 8);
+    ledcWrite(TFT_BL_PIN, input.getBrightness()); // Apply loaded brightness
 
     for(int i = 0; i < NUM_PARTICLES; i++) {
         particles[i].x = random(0, SCREEN_WIDTH);
@@ -79,9 +78,8 @@ void setup() {
 void loop() {
     // Input
     input.update(current_mode, user_y_offset, angle_y);
-    ledcWrite(
-        0,
-        input.getBrightness()); // Update brightness dynamically using channel 0
+    ledcWrite(TFT_BL_PIN,
+              input.getBrightness()); // Update brightness dynamically
 
     // Background
     if(canvas.created()) {
