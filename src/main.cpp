@@ -87,7 +87,10 @@ void loop() {
     }
 
     // Animation Math
-    phase += 0.08f;
+    phase += 0.08f + (random(-10, 11) / 1000.0f);  // Add slight randomness
+    if (phase > 2.0f * PI * 100.0f) {
+        phase -= 2.0f * PI * 100.0f;
+    }
 
     // Slow autonomous rotation around body axis (Y-axis)
     // Randomize target speed every 45 seconds
